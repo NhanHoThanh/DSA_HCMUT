@@ -125,6 +125,12 @@ template <class T>
 bool DLinkedList<T>::removeItem(const T &item)
 {
     /* Remove the first apperance of item in list and return true, otherwise return false */
+    Node *current = head;
+
+    while (current->data != item)
+    {
+        current = current->next;
+    }
 }
 
 template <class T>

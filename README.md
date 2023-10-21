@@ -13,3 +13,17 @@ This is a repsitory for storing my code for the HCMUT's DSA course
 > - Additional mid-term and end-term tests, as well as document that I write during the course
 
 _Lastly, there will also be some advices for what should you preperare for those exams_
+
+```python
+print("Hello, world!")
+for i in range(10):
+    print(i)
+```
+
+```cpp
+int main(){
+    cout << "hello world";
+    return 0;
+}
+cout << "Hello World";
+```

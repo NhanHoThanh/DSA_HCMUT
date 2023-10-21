@@ -86,3 +86,7 @@ public:
         Iterator operator++(int);
     };
 };
+int main()
+{
+    return 0;
+}

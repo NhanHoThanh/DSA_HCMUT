@@ -90,6 +90,49 @@ public:
     };
 };
 
+template <class T>
+T DLinkedList<T>::removeAt(int index)
+{
+    Node *current = head;
+    for (int i = 0; i < index; i++)
+    {
+        current = current->next;
+    }
+    T data = current->data;
+    if (current->previous != nullptr)
+    {
+        current->previous->next = current->next;
+    }
+    else
+    {
+        // current is head
+        head = current->next;
+    }
+    if (current->next != nullptr)
+    {
+        current->next->previous = current->previous;
+    }
+    else
+    {
+        // current is tail
+        tail = current->previous;
+    }
+    count -= 1;
+    return data;
+}
+
+template <class T>
+bool DLinkedList<T>::removeItem(const T &item)
+{
+    /* Remove the first apperance of item in list and return true, otherwise return false */
+}
+
+template <class T>
+void DLinkedList<T>::clear()
+{
+    /* Remove all elements in list */
+}
+
 /*
  * TODO: Implement class Iterator's method
  * Note: method remove is different from SLinkedList, which is the advantage of DLinkedList
@@ -198,6 +241,11 @@ void DLinkedList<T>::Iterator::remove()
 
     delete nodeToRemove;
     pList->count--;
+
+    if (index > 0)
+    {
+        index--;
+    }
 }
 
 template <class T>
@@ -211,29 +259,23 @@ bool DLinkedList<T>::Iterator::operator!=(const DLinkedList::Iterator &iterator)
 template <class T>
 typename DLinkedList<T>::Iterator &DLinkedList<T>::Iterator::operator++()
 {
-    current = current->next;
     if (current == nullptr)
     {
-        current = pList->head;
+        index = 0;
+        current = this->pList->head;
+        return *this;
     }
-    index++;
+    current = current->next;
+    index += 1;
     return *this;
 }
 
 template <class T>
 typename DLinkedList<T>::Iterator DLinkedList<T>::Iterator::operator++(int)
 {
-    Iterator temp = *this;
-    current = current->next;
-    if (current == nullptr)
-    {
-        current = pList->head;
-    }
-    if (current == nullptr)
-    {
-        throw std::out_of_range("Segmentation fault!");
-    }
-    return temp;
+    DLinkedList<T>::Iterator iterator = *this;
+    ++*this;
+    return iterator;
 }
 
 int main()

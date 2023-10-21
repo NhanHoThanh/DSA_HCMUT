@@ -14,6 +14,8 @@ This is a repsitory for storing my code for the HCMUT's DSA course
 
 _Lastly, there will also be some advices for what should you preperare for those exams_
 
+_Please note that not every code will be provided, the repository is primarily a personal space for store my code!_
+
 ```python
 print("Hello, world!")
 for i in range(10):

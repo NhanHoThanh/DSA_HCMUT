@@ -5,7 +5,7 @@
       "name": "C++ Launch",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/main.exe",
+      "program": "${workspaceFolder}/Lab2/doublelinkedlist.exe",
       "args": ["test.txt"],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",

@@ -5,7 +5,7 @@
       "name": "C++ Launch",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/Lab2\test.cpp",
+      "program": "${workspaceFolder}/Lab2/queue.exe",
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
       "environment": [],

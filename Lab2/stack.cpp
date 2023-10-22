@@ -5,6 +5,8 @@
 #include <stack>
 #include <vector>
 #include <queue>
+#include <sstream>
+
 using namespace std;
 
 template <class T>
@@ -112,7 +114,7 @@ vector<int> nextGreater(vector<int> &arr)
     return arr;
 }
 
-#include <sstream>
+#include <sstream> //for the evaluatePostfix
 
 int evaluatePostfix(string expr)
 {
@@ -316,8 +318,6 @@ string removeDuplicates(string S)
     return result;
 }
 
-#include <sstream>
-
 // iostream, stack and vector are included
 
 vector<int> nextGreater(vector<int> &arr)
@@ -413,7 +413,7 @@ int stoi(char ch)
     return i;
 }
 
-int baseballScore(string ops)
+int baseballScore(string ops) // Remember to include the stoi function above
 {
     /*TODO*/
     stack<int> scores;
@@ -454,56 +454,83 @@ int baseballScore(string ops)
 vector<int> stock_span(const vector<int> &ns)
 {
     // STUDENT ANSWER
-}
-vector<int> stock_span(const vector<int> &ns)
-{
-    // STUDENT ANSWER
-    vector<int> S;
-    int n = ns.size();
-    // Span value of first day is always 1
-    S[0] = 1;
 
-    // Calculate span value of remaining days
-    // by linearly checking previous days
-    for (int i = 1; i < n; i++)
+    vector<int> result(ns.size());
+    stack<int> a, b;
+    for (int i = 0; i < int(result.size()); i++)
     {
-        S[i] = 1; // Initialize span value
-
-        // Traverse left while the next element
-        // on left is smaller than price[i]
-        for (int j = i - 1;
-             (j >= 0) && (ns[i] >= ns[j]); j--)
-            S[i]++;
+        result[i] = 1;
     }
-    return S;
+    for (int i = 0; i < int(ns.size()); i++)
+    {
+        a.push(ns[i]);
+    }
+    while (!a.empty())
+    {
+        b = a;
+        b.pop();
+        while (!b.empty())
+        {
+            if (b.top() < a.top())
+            {
+                result[a.size() - 1] += 1;
+                b.pop();
+            }
+            else
+            {
+                break;
+            }
+        }
+        a.pop();
+    }
+    return result;
 }
 
-bool isBipartite(vector<vector<int>> graph)
+bool isValidParentheses(string s)
 {
-    int n = graph.size();
-    vector<int> color(n, 0);
-    for (int i = 0; i < n; i++)
+    /*TODO*/
+    int length = s.length();
+    if (s.length() == 0)
+        return true;
+    stack<char> myStack;
+    char top;
+
+    for (int i = 0; i < length; i++)
     {
-        if (color[i] != 0)
-            continue;
-        color[i] = 1;
-        queue<int> q;
-        q.push(i);
-        while (!q.empty())
+        if (s[i] == '(' || s[i] == '[' || s[i] == '{')
         {
-            int t = q.front();
-            q.pop();
-            for (auto &x : graph[t])
+            myStack.push(s[i]);
+            continue;
+        }
+
+        else if (myStack.empty())
+            return false;
+        else
+        {
+            switch (s[i])
             {
-                if (color[x] == 0)
-                {
-                    color[x] = -color[t];
-                    q.push(x);
-                }
-                else if (color[x] == color[t])
+            case ')':
+                top = myStack.top();
+                myStack.pop();
+                if (top == '[' || top == '{')
                     return false;
+                break;
+
+            case ']':
+                top = myStack.top();
+                myStack.pop();
+                if (top == '(' || top == '{')
+                    return false;
+                break;
+
+            case '}':
+                top = myStack.top();
+                myStack.pop();
+                if (top == '[' || top == '(')
+                    return false;
+                break;
             }
         }
     }
-    return true;
+    return myStack.empty();
 }

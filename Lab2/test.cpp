@@ -127,28 +127,3 @@ bool canEatFood(int maze[5][5], int fx, int fy)
     // no path is found return false.
     return false;
 }
-
-// Driver code
-int main()
-{
-    // Initially setting the visited
-    // array to true (unvisited)
-
-    // Maze matrix
-    int maze[N][M] = {
-        {1, 0, 1, 1, 0},
-        {1, 1, 1, 0, 1},
-        {0, 1, 0, 1, 1},
-        {1, 1, 1, 1, 1}};
-
-    // Food coordinates
-
-    if (isReachable(maze, 2, 3))
-    {
-        cout << "Path Found!" << '\n';
-    }
-    else
-        cout << "No Path Found!" << '\n';
-
-    return 0;
-}

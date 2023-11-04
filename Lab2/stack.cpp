@@ -534,3 +534,50 @@ bool isValidParentheses(string s)
     }
     return myStack.empty();
 }
+
+
+
+bool check(stack<char> st, int k, char x){
+    int cnt = 0;
+    while(!st.empty() && st.top() == x){
+        cnt++;
+        st.pop();
+        if(cnt == k) break;
+    }
+    return (cnt == k);
+}
+
+string deleteDuplicate(string s, int k) {
+    stack<char> st;
+    for(char x : s){
+        if(st.empty()){
+            st.push(x);
+        }else{
+            if(x == st.top()){
+                if(check(st, k-1, x)){
+                    int tem = k-1;
+                    while(!st.empty() && tem--){
+                        st.pop();
+                    }
+                }else{
+                    st.push(x);
+                }
+            }else{
+                st.push(x);
+            }
+        }
+    }
+    if(st.empty()){
+        return "-1";
+    }
+    string pre_res = "";
+    while(!st.empty()){
+        pre_res += st.top();
+        st.pop();
+    }
+    string res = "";
+    for(int i = pre_res.size()-1; i >= 0; i--){
+        res += pre_res[i];
+    }
+    return res;
+}

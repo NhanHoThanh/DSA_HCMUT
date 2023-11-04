@@ -1,8 +1,9 @@
 
 #include <cstring>
-#include <iostream>
 #include <stack>
-
+#include <iostream>
+#include <vector>
+#include <string>
 using namespace std;
 
 #define N 4
@@ -126,4 +127,15 @@ bool canEatFood(int maze[5][5], int fx, int fy)
     // If the stack is empty and
     // no path is found return false.
     return false;
+}
+
+int main()
+{
+    vector<string> msg{"Hello", "C++", "World", "from", "VS Code", "and the C++ extension!"};
+
+    for (const string &word : msg)
+    {
+        cout << word << " ";
+    }
+    cout << endl;
 }

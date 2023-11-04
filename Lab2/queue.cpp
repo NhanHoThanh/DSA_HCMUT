@@ -121,6 +121,48 @@ long long nthNiceNumber(int n)
     return q.front();
 }
 
+#include <iostream>
+#include <vector>
+#include <queue>
+
+void bfs(vector<vector<int>> graph, int start)
+{
+    int numVertices = graph.size();
+    bool *visited = new bool[numVertices];
+    for (int i = 0; i < numVertices; i++)
+        visited[i] = false;
+
+    queue<int> myQueue;
+    bool isFirst = true;
+    visited[start] = true;
+    myQueue.push(start);
+
+    while (!myQueue.empty())
+    {
+        start = myQueue.front();
+        if (isFirst)
+        {
+            cout << start;
+            isFirst = false;
+        }
+        else
+            cout << " " << start;
+        myQueue.pop();
+
+        int outDegree = graph[start].size();
+        for (int j = 0; j < outDegree; ++j)
+        {
+            int temp = graph[start][j];
+            if (!visited[temp])
+            {
+                visited[temp] = true;
+                myQueue.push(temp);
+            }
+        }
+    }
+    delete[] visited;
+}
+
 int sumOfMaxSubarray(vector<int> &nums, int k)
 {
     // STUDENT ANSWER
@@ -130,7 +172,6 @@ int sumOfMaxSubarray(vector<int> &nums, int k)
     for (int i = 0; i < k; i++)
     {
         sum += nums[i];
-        cout << sum << endl;
     }
     for (int i = k; i < n; i++)
     {
@@ -138,11 +179,79 @@ int sumOfMaxSubarray(vector<int> &nums, int k)
         if (temp > sum)
         {
             max = temp;
-            cout << max << endl;
         }
         sum = temp;
     }
     return max;
+}
+
+int secondsToBeRotten(vector<vector<int>> &grid)
+{
+    int rows = grid.size();
+    int colums = grid[0].size();
+    int seconds = 0;
+    queue<pair<int, int>> rotten;
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < colums; j++)
+        {
+            if (grid[i][j] == 2)
+            {
+                rotten.push({i, j});
+            }
+        }
+    }
+
+    while (!rotten.empty())
+    {
+        int size = rotten.size();
+        for (int i = 0; i < size; i++)
+        {
+            pair<int, int> current = rotten.front();
+            rotten.pop();
+
+            int x = current.first;
+            int y = current.second;
+
+            if (x + 1 < rows && grid[x + 1][y] == 1)
+            {
+                grid[x + 1][y] = 2;
+                rotten.push({x + 1, y});
+            }
+            if (x - 1 >= 0 && grid[x - 1][y] == 1)
+            {
+                grid[x - 1][y] = 2;
+                rotten.push({x - 1, y});
+            }
+            if (y + 1 < colums && grid[x][y + 1] == 1)
+            {
+                grid[x][y + 1] = 2;
+                rotten.push({x, y + 1});
+            }
+            if (y - 1 >= 0 && grid[x][y - 1] == 1)
+            {
+                grid[x][y - 1] = 2;
+                rotten.push({x, y - 1});
+            }
+        }
+        if (!rotten.empty())
+        {
+            seconds++;
+        }
+    }
+
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < colums; j++)
+        {
+            if (grid[i][j] == 1)
+            {
+                return -1;
+            }
+        }
+    }
+
+    return seconds;
 }
 
 int main()

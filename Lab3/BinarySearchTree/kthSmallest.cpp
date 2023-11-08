@@ -5,28 +5,28 @@
 #include <algorithm>
 using namespace std;
 
-class BSTNode
+class Node
 {
 public:
     int val;
-    BSTNode *left;
-    BSTNode *right;
-    BSTNode()
+    Node *left;
+    Node *right;
+    Node()
     {
         this->left = this->right = nullptr;
     }
-    BSTNode(int val)
+    Node(int val)
     {
         this->val = val;
         this->left = this->right = nullptr;
     }
-    BSTNode(int val, BSTNode *&left, BSTNode *&right)
+    Node(int val, Node *&left, Node *&right)
     {
         this->val = val;
         this->left = left;
         this->right = right;
     }
-    void kthSmallestUtil(BSTNode *root, int &k, int &result)
+    void kthSmallestUtil(Node *root, int &k, int &result)
     {
         if (root == NULL || k < 0)
             return;
@@ -43,7 +43,7 @@ public:
         kthSmallestUtil(root->right, k, result);
     }
 
-    int kthSmallest(BSTNode *root, int k)
+    int kthSmallest(Node *root, int k)
     {
         int result = -1;
         kthSmallestUtil(root, k, result);

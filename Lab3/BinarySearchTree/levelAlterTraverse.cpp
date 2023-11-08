@@ -4,22 +4,22 @@
 #include <queue>
 #include <algorithm>
 using namespace std;
-class BSTNode
+class Node
 {
 public:
     int val;
-    BSTNode *left;
-    BSTNode *right;
-    BSTNode()
+    Node *left;
+    Node *right;
+    Node()
     {
         this->left = this->right = nullptr;
     }
-    BSTNode(int val)
+    Node(int val)
     {
         this->val = val;
         this->left = this->right = nullptr;
     }
-    BSTNode(int val, BSTNode *&left, BSTNode *&right)
+    Node(int val, Node *&left, Node *&right)
     {
         this->val = val;
         this->left = left;
@@ -27,7 +27,7 @@ public:
     }
 };
 
-vector<int> levelAlterTraverse(BSTNode *root)
+vector<int> levelAlterTraverse(Node *root)
 {
     if (!root)
     {
@@ -35,8 +35,8 @@ vector<int> levelAlterTraverse(BSTNode *root)
         return ans;
     }
 
-    stack<BSTNode *> oddLevelStack;
-    stack<BSTNode *> evenLevelStack;
+    stack<Node *> oddLevelStack;
+    stack<Node *> evenLevelStack;
     vector<int> ans;
 
     int level = 1;
@@ -48,7 +48,7 @@ vector<int> levelAlterTraverse(BSTNode *root)
         {
             while (!evenLevelStack.empty())
             {
-                BSTNode *top = evenLevelStack.top();
+                Node *top = evenLevelStack.top();
                 evenLevelStack.pop();
 
                 ans.push_back(top->val);
@@ -66,7 +66,7 @@ vector<int> levelAlterTraverse(BSTNode *root)
         {
             while (!oddLevelStack.empty())
             {
-                BSTNode *top = oddLevelStack.top();
+                Node *top = oddLevelStack.top();
                 oddLevelStack.pop();
 
                 ans.push_back(top->val);
@@ -87,7 +87,7 @@ vector<int> levelAlterTraverse(BSTNode *root)
     return ans;
 }
 
-int height(BSTNode *root)
+int height(Node *root)
 {
     if (root == nullptr)
     {
@@ -109,7 +109,7 @@ int height(BSTNode *root)
     }
 }
 
-void tranverseTreeAndPushValueIntoVector(BSTNode *root, vector<int> &arr, int level, bool leftToRight)
+void tranverseTreeAndPushValueIntoVector(Node *root, vector<int> &arr, int level, bool leftToRight)
 {
     if (root == NULL)
         return;
@@ -130,7 +130,7 @@ void tranverseTreeAndPushValueIntoVector(BSTNode *root, vector<int> &arr, int le
     }
 }
 
-vector<int> levelAlterTraverse(BSTNode *root)
+vector<int> levelAlterTraverse(Node *root)
 {
     vector<int> arr;
     int h = height(root);

@@ -1,8 +1,8 @@
 # Data Structure and Algorithm
 
-This is a repsitory for storing my code for the HCMUT's DSA course
+This is a repsitory storing my code for the HCMUT's DSA course
 
-## This repository store
+## This repository stores:
 
 > - Code for Labs
 >

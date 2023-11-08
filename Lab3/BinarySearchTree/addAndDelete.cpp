@@ -28,33 +28,33 @@ Node *minValueNode(Node *node)
     return current;
 }
 
-Node *deleteNode(Node *root, T value)
+Node *deleteNode(Node *node, T value)
 {
-    if (root == nullptr)
-        return root;
-    if (value < root->value)
-        root->pLeft = deleteNode(root->pLeft, value);
-    else if (value > root->value)
-        root->pRight = deleteNode(root->pRight, value);
+    if (node == nullptr)
+        return node;
+    if (value < node->value)
+        node->pLeft = deleteNode(node->pLeft, value);
+    else if (value > node->value)
+        node->pRight = deleteNode(node->pRight, value);
     else
     {
-        if (root->pLeft == nullptr)
+        if (node->pLeft == nullptr)
         {
-            Node *temp = root->pRight;
-            delete root;
+            Node *temp = node->pRight;
+            delete node;
             return temp;
         }
-        else if (root->pRight == nullptr)
+        else if (node->pRight == nullptr)
         {
-            Node *temp = root->pLeft;
-            delete root;
+            Node *temp = node->pLeft;
+            delete node;
             return temp;
         }
-        Node *temp = minValueNode(root->pRight);
-        root->value = temp->value;
-        root->pRight = deleteNode(root->pRight, temp->value);
+        Node *temp = minValueNode(node->pRight);
+        node->value = temp->value;
+        node->pRight = deleteNode(node->pRight, temp->value);
     }
-    return root;
+    return node;
 }
 
 void deleteNode(T value)

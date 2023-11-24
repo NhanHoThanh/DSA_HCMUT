@@ -1,0 +1,135 @@
+class SplayTree {
+    struct Node {
+        int val;
+        Node* pLeft;
+        Node* pRight;
+        Node* pParent;
+        Node(int val = 0, Node* l = nullptr, Node* r = nullptr, Node* par = nullptr) : val(val), pLeft(l), pRight(r), pParent(par) {}
+    };
+    Node* root;
+
+    // print the tree structure for local testing
+    void printBinaryTree(string prefix, const Node* root, bool isLeft, bool hasRightSibling) {
+        if (!root && isLeft && hasRightSibling) {
+            cout << prefix << "├──\n";
+        }
+        if (!root) return;
+        cout << prefix;
+        if (isLeft && hasRightSibling)
+            cout << "├──";
+        else
+            cout << "└──";
+        cout << root->val << '\n';
+        printBinaryTree(prefix + (isLeft && hasRightSibling ? "|  " : "   "), root->pLeft, true, root->pRight);
+        printBinaryTree(prefix + (isLeft && hasRightSibling ? "|  " : "   "), root->pRight, false, root->pRight);
+    }
+
+    void printPreorder(Node* p) {
+        if (!p) {
+            return;
+        }
+        cout << p->val << ' ';
+        printPreorder(p->pLeft);
+        printPreorder(p->pRight);
+    }
+
+   public:
+    SplayTree() {
+        root = nullptr;
+    }
+    ~SplayTree() {
+        // Ignore deleting all nodes in the tree
+    }
+
+    void printBinaryTree() {
+        printBinaryTree("", root, false, false);
+    }
+
+    void printPreorder() {
+        printPreorder(root);
+        cout << "\n";
+    }
+    void rotateLeft(Node* x) {
+        Node* y = x->pRight;
+        if (y) {
+            x->pRight = y->pLeft;
+            if (y->pLeft) y->pLeft->pParent = x;
+            y->pParent = x->pParent;
+        }
+
+        if (!x->pParent)
+            root = y;
+        else if (x == x->pParent->pLeft)
+            x->pParent->pLeft = y;
+        else
+            x->pParent->pRight = y;
+
+        if (y) y->pLeft = x;
+        x->pParent = y;
+    }
+
+    void rotateRight(Node* x) {
+        Node* y = x->pLeft;
+        if (y) {
+            x->pLeft = y->pRight;
+            if (y->pRight) y->pRight->pParent = x;
+            y->pParent = x->pParent;
+        }
+
+        if (!x->pParent)
+            root = y;
+        else if (x == x->pParent->pRight)
+            x->pParent->pRight = y;
+        else
+            x->pParent->pLeft = y;
+
+        if (y) y->pRight = x;
+        x->pParent = y;
+    }
+    void splay(Node* x) {
+        while (x->pParent) {
+            if (!x->pParent->pParent) {
+                if (x->pParent->pLeft == x)
+                    rotateRight(x->pParent);
+                else
+                    rotateLeft(x->pParent);
+            } else if (x->pParent->pLeft == x && x->pParent->pParent->pLeft == x->pParent) {
+                rotateRight(x->pParent->pParent);
+                rotateRight(x->pParent);
+            } else if (x->pParent->pRight == x && x->pParent->pParent->pRight == x->pParent) {
+                rotateLeft(x->pParent->pParent);
+                rotateLeft(x->pParent);
+            } else if (x->pParent->pLeft == x && x->pParent->pParent->pRight == x->pParent) {
+                rotateRight(x->pParent);
+                rotateLeft(x->pParent);
+            } else {
+                rotateLeft(x->pParent);
+                rotateRight(x->pParent);
+            }
+        }
+    }
+
+    void insert(int key) {
+        Node* z = root;
+        Node* p = nullptr;
+
+        while (z) {
+            p = z;
+            if (z->val < key)
+                z = z->pRight;
+            else
+                z = z->pLeft;
+        }
+
+        z = new Node(key, nullptr, nullptr, p);
+
+        if (!p)
+            root = z;
+        else if (p->val < z->val)
+            p->pRight = z;
+        else
+            p->pLeft = z;
+
+        splay(z);
+    }
+};

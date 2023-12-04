@@ -103,10 +103,13 @@ edges = [
     Edge(4, 6, 999, 0),
     Edge(5, 6, 999, 0)
 ]
-
+# total node
 N = 7
+# supply
 K = 28
+# start node
 s = 0
+# end node
 t = 6
 
 result = min_cost_flow(N, edges, K, s, t)
